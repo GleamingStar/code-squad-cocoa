@@ -109,4 +109,4 @@ printExecutionSecuence();
 
 ### 수행결과
 
-![image](./esult.png)
+![image](Result.png)
