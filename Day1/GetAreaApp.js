@@ -1,5 +1,3 @@
-const { get } = require("http");
-
 var executionSequence = [];
 
 function printExecutionSecuence() {
@@ -21,7 +19,7 @@ function getArea(sort, arg1, arg2, arg3) {
         result = 'error';
     }
     executionSequence.push(sort+' = '+result);
-    console.log(result);
+    console.log(sort+' : '+result);
 };
 getArea.prototype.getCircle = function(radius, radius2) {
     var sum = radius*radius*Math.PI;
@@ -37,9 +35,8 @@ getArea.prototype.getTrapezoid = function(base0, base1, height) {
     return base0*base1*height/2;
 };
 
-var test0 = new getArea('circle', 2);
-var test1 = new getArea('circle', 1, 2);
+var test0 = new getArea('circle', 4);
+var test1 = new getArea('circle', 3, 4);
 var test2 = new getArea('rect', 2, 10);
 var test3 = new getArea('trapezoid', 2, 4, 10);
-var test4 = new getArea('a', 'b')
 printExecutionSecuence();
