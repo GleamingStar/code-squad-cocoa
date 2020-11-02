@@ -17,18 +17,18 @@ FigureApp.prototype.getCircle = function(radius, radius2) {
     for(var i=radius+1; i<=radius2; i++) {
         sum += i*i*Math.PI;
     }
-    this.endCaclculate('circle', sum);
+    this.addRecord('circle', sum);
 };
 
 FigureApp.prototype.getRectangle = function(base, height) {
-    this.endCaclculate('rectangle', base*height);
+    this.addRecord('rectangle', base*height);
 };
 
 FigureApp.prototype.getTrapezoid = function(base0, base1, height) {
-    this.endCaclculate('trapezoid', base0*base1*height/2);
+    this.addRecord('trapezoid', base0*base1*height/2);
 };
 
-FigureApp.prototype.endCaclculate = function(sort, result) {
+FigureApp.prototype.addRecord = function(sort, result) {
     this.executionSequence.push(sort+' = '+result);
     console.log(sort+' : '+result);
 };
