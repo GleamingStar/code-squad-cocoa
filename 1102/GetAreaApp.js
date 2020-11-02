@@ -3,8 +3,11 @@ const { get } = require("http");
 var executionSequence = [];
 
 function printExecutionSecuence() {
-    for (var i=0; i<executionSequence.length; i++)
-        console.log(executionSequence[i]);
+    var textArr = [];
+    executionSequence.forEach(function(elements){
+        textArr.push(elements);
+    })
+    console.log('계산수행순서 : '+textArr.join(', '))
 }
 function getArea(sort, arg1, arg2, arg3) {
     var result = 0;
@@ -17,7 +20,7 @@ function getArea(sort, arg1, arg2, arg3) {
     } else {
         result = 'error';
     }
-    executionSequence.push(sort+' : '+result);
+    executionSequence.push(sort+' = '+result);
     console.log(result);
 };
 getArea.prototype.getCircle = function(radius, radius2) {
