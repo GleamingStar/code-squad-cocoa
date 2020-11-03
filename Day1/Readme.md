@@ -64,6 +64,7 @@ printExecutionSequence()  //printExecutionSequence가 불려지면, 함수 호�
 function FigureApp() {
     this.executionSequence = [];
 };
+
 FigureApp.prototype.getArea = function() {
     let sort = arguments[0];
     if(sort === 'circle') {
@@ -75,9 +76,9 @@ FigureApp.prototype.getArea = function() {
     }
 };
 
-FigureApp.prototype.getCircle = function(radius, radius2) {
-    let sum = radius*radius*Math.PI;
-    for(let i=radius+1; i<=radius2; i++) {
+FigureApp.prototype.getCircle = function(radius, maxRadius = radius) {
+    let sum = 0;
+    for(let i=radius; i<=maxRadius; i++) {
         sum += i*i*Math.PI;
     }
     this.addRecord('circle', sum);
@@ -92,8 +93,8 @@ FigureApp.prototype.getTrapezoid = function(base0, base1, height) {
 };
 
 FigureApp.prototype.addRecord = function(sort, result) {
-    this.executionSequence.push(sort+' = '+result);
-    console.log(sort+' : '+result);
+    this.executionSequence.push(`${sort} = ${result}`);
+    console.log(`${sort}+ : ${result}`);
 };
 
 FigureApp.prototype.printExecutionSecuence = function() {
