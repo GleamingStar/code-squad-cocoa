@@ -94,7 +94,7 @@ FigureApp.prototype.getTrapezoid = function(base0, base1, height) {
 
 FigureApp.prototype.addRecord = function(sort, result) {
     this.executionSequence.push(`${sort} = ${result}`);
-    console.log(`${sort}+ : ${result}`);
+    console.log(`${sort} : ${result}`);
 };
 
 FigureApp.prototype.printExecutionSecuence = function() {
@@ -105,7 +105,7 @@ FigureApp.prototype.printExecutionSecuence = function() {
     console.log('계산수행순서 : '+textArr.join(', '))
 };
 
-let test = new FigureApp();
+const test = new FigureApp();
 
 test.getArea('circle', 4);
 test.getCircle(3, 4);
