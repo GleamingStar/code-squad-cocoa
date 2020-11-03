@@ -1,20 +1,20 @@
 function FigureApp() {
     this.executionSequence = [];
 };
-
-FigureApp.prototype.getArea = function(sort, arg1, arg2, arg3) {
+FigureApp.prototype.getArea = function() {
+    let sort = arguments[0];
     if(sort === 'circle') {
-        this.getCircle(arg1, arg2);
+        this.getCircle(arguments[1], arguments[2]);
     } else if (sort === 'rect') {
-        this.getRectangle(arg1,arg2);
+        this.getRectangle(arguments[1],arguments[2]);
     } else if (sort === 'trapezoid') {
-        this.getTrapezoid(arg1, arg2, arg3);
+        this.getTrapezoid(arguments[1], arguments[2], arguments[3]);
     }
 };
 
 FigureApp.prototype.getCircle = function(radius, radius2) {
-    var sum = radius*radius*Math.PI;
-    for(var i=radius+1; i<=radius2; i++) {
+    let sum = radius*radius*Math.PI;
+    for(let i=radius+1; i<=radius2; i++) {
         sum += i*i*Math.PI;
     }
     this.addRecord('circle', sum);
@@ -34,7 +34,7 @@ FigureApp.prototype.addRecord = function(sort, result) {
 };
 
 FigureApp.prototype.printExecutionSecuence = function() {
-    var textArr = [];
+    let textArr = [];
     this.executionSequence.forEach(function(elements){
         textArr.push(elements);
     })
