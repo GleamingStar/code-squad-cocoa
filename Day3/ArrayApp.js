@@ -1,13 +1,17 @@
 function factorial(n) {
-    let arr = [];
     if (n>1) {
-        arr.unshift(n*n-1);
-        console.log(arr);
-        return factorial(n-1);
+        return n*factorial(n-1);
         
     } else if (n === 1) {
-        arr.unshift(1);
-        console.log(arr);
+        return 1;
     }
 }
-factorial(3);
+function calculate(n) {
+    let arr = [];
+    for (let i=1; i<=n; n++) {
+        arr.push(factorial[i]);
+    }
+    console.log(arr);
+}
+console.log(factorial(4));
+calculate(4);

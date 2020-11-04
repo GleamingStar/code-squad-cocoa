@@ -11,7 +11,7 @@ class Jinsoo{
         for (let i=0; i<this.number*this.person; i++) {
             let newString = i.toString(this.base);
             for (let j=0; j<newString.length; j++)
-            this.answerArray.push(newString.charAt(j));
+                this.answerArray.push(newString.charAt(j));
         }
     };
     print() {
