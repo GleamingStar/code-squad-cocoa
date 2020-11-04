@@ -1,4 +1,4 @@
-[{
+const data =[{
 	"id": 1,
 	"name": "Yong",
 	"phone": "010-0000-0000",
@@ -78,3 +78,5 @@
 		]
 	}]
 }]
+
+exports.data = data;
