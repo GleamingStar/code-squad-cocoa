@@ -1,31 +1,40 @@
 class Jinsoo{
-    answerArray = [];
-    constructor(base, number, person, turn) {
-        this.base = base;
-        this.number = number;
-        this.person = person;
-        this.turn = turn;
-        this.convert();
+    constructor() {
+
     };
-    convert() {
-        for (let i=0; i<this.number*this.person; i++) {
-            let newString = i.toString(this.base);
+
+    solution(base, number, person) {
+        this.print(this.convert(base,number,person));
+    };
+
+    getMyTurn(base, number, person, turn){
+        console.log('길동이 말해야 할 수는 ')
+        this.print(this.filter(base, number, person, turn));
+    };
+    
+    convert(base, number, person) {
+        let answerArray = [];
+        for (let i=0; i<number*person; i++) {
+            let newString = i.toString(base);
             for (let j=0; j<newString.length; j++)
-                this.answerArray.push(newString.charAt(j));
+                answerArray.push(newString.charAt(j));
         }
+        return answerArray;
     };
-    print() {
-        console.log('결과 :\"'+this.answerArray.join('\", \"')+'\"');
-    }
-    getMyTurn(){
+
+    print(array) {
+        console.log('\"'+array.join('\", \"')+'\"');
+    };
+
+    filter(base, number, person, turn) {
         let newArr = [];
-        for(let i = 0; i<this.number*this.person; i++)
-            if (i%this.person === this.turn-1)
-                newArr.push(this.answerArray[i]);
-        console.log('길동이 말할 수는 \"'+newArr.join('\", \"')+'\"');
-    };
+        for(let i = 0; i<number*person; i++)
+            if (i%person === turn-1)
+                newArr.push(this.convert(base, number, person)[i]);
+        return newArr;
+    }
 };
 
-const game1 = new Jinsoo(2,8,3,1);
-game1.print();
-game1.getMyTurn();
+const test = new Jinsoo();
+test.solution(16,10,3);
+test.getMyTurn(2,5,3,2);
