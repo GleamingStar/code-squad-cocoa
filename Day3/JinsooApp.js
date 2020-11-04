@@ -18,6 +18,10 @@ class Jinsoo{
             let newString = i.toString(base);
             for (let j=0; j<newString.length; j++)
                 answerArray.push(newString.charAt(j));
+            if (answerArray.length === number*person)
+                break;
+                //애초에 추가할때 p당 n개만 추가하면안돼?
+                //2진법이면 length< 16진법이면 
         }
         return answerArray;
     };
@@ -37,5 +41,5 @@ class Jinsoo{
 };
 
 const test = new Jinsoo();
-test.solution(16, 10, 4);
+test.solution(2, 5, 3);
 test.getMyTurn(2, 5, 3, 1);

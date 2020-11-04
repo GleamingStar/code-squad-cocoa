@@ -24,7 +24,14 @@ const data = {
         "onMouseUp": "sun1.opacity = (sun1.opacity / 100) * 90;"
     }
 }
-console.log(data.length);
-console.log(data.debug);
-console.log(data.window);
-console.log(data.window.width);
+
+// let arr = [];
+// for (let obj in data) {
+//     for (let key in data[obj]) {
+//         if (typeof data[obj][key] === 'number')
+//             arr.push(key);
+//     }
+// }
+// console.log(arr);
+
+exports.data = data;
