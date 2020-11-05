@@ -4,9 +4,9 @@ function filterId(arr) {
 
     let filteredArray = [];
 
-    arr.filter(id => !reg.test(id)).forEach(function (id) {
-        filteredArray.push(id.replace(/[0-9]/g, ""));
-    });
+    let replaceNumber = str => filteredArray.push(str.replace(/[0-9]/g, ""));
+
+    arr.filter(id => !reg.test(id)).forEach(replaceNumber);
 
     console.log(filteredArray);
 };
@@ -25,4 +25,4 @@ function filterId2(arr) {
 const peoples = ["crong!@#", "honux5", "sarah#", "hea3d", "zello", "5lucas"];
 
 filterId(peoples);
-filterId2(peoples);
+// filterId2(peoples);
