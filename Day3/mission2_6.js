@@ -17,9 +17,14 @@ var reducer2 = function(accumulator, value) {
     return accumulator;
 }
 
-console.log(data.reduce(reducer2, initialValue));
-console.log(data.filter(x => x % 2 !=0));
+// console.log(data.reduce(reducer2, initialValue));
+// console.log(data.filter(x => x % 2 !=0));
 
+let total = [1, 2, 3, 4, 5].reduce(
+    ( acc, curr ) => acc + curr, 
+    0
+  );
+  console.log(total)
 
 
 const myReduce = (arr, callback, initialValue) => {
