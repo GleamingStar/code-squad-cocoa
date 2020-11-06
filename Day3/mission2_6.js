@@ -36,17 +36,17 @@ const myReduce = (array, callback, initialValue) => {
 
     if (!initialValue) {
         initialValue = 0;
-        accumulator = arr[0];
+        accumulator = array[0];
         currentIndex = 1
-        currentValue = arr[currentIndex];
+        currentValue = array[currentIndex];
     } else if (initialValue) {
         accumulator = initialValue;
         currentIndex = 0;
-        currentValue = arr[currentIndex];
+        currentValue = array[currentIndex];
     };
 
-    for (currentIndex; currentIndex < arr.length; currentIndex++) {
-        currentValue = arr[currentIndex];
+    for (currentIndex; currentIndex < array.length; currentIndex++) {
+        currentValue = array[currentIndex];
         accumulator = callback(accumulator, currentValue, currentIndex, array);
     };
 
