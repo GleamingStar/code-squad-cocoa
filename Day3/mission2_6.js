@@ -28,24 +28,28 @@
 // console.log(total)
 ////////////////////////////////
 
-const myReduce = (arr, callback, initialValue) => {
+const myReduce = (array, callback, initialValue) => {
     //arr를 arr.myReduce로 하려면? let arr=this;했는데 안먹힘!
     let accumulator;
     let currentValue;
-    let i;
+    let currentIndex;
+
     if (!initialValue) {
         initialValue = 0;
         accumulator = arr[0];
-        currentValue = arr[1];
-        i = 1
+        currentIndex = 1
+        currentValue = arr[currentIndex];
     } else if (initialValue) {
         accumulator = initialValue;
-        currentValue = arr[0];
-        i = 0;
-    }
-    //너 currentValue 어따쓰려고? 이게 i인가? i는 currentindex아냐? 지금처럼쓰는거맞나?
-    for (i; i < arr.length; i++)
-        accumulator = callback(accumulator, arr[i]);
+        currentIndex = 0;
+        currentValue = arr[currentIndex];
+    };
+
+    for (currentIndex; currentIndex < arr.length; currentIndex++) {
+        currentValue = arr[currentIndex];
+        accumulator = callback(accumulator, currentValue, currentIndex, array);
+    };
+
     return accumulator;
 }
 const arr = [0,1,2,3,4];
