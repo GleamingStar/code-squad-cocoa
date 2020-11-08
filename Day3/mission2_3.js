@@ -5,17 +5,14 @@ function AverageApp(arr) {
 };
 AverageApp.prototype.printAverage = function () {
     let newArr = [];
-    for (let i = 0; i < this.arr.length; i++) {
-        newArr.push(Math.floor(this.getAverage(this.arr[i])));
+    for (let i of this.arr) {
+        newArr.push(Math.round(this.getAverage(i)));
     }
     console.log("학생들의 평균점수는 " + newArr.join('점, ') + "점입니다.");
 };
 
 AverageApp.prototype.getAverage = function (arr) {
-    let sum = 0;
-    for (let i = 0; i < arr.length; i++)
-        sum += arr[i];
-    return sum / arr.length;
+    return arr.reduce((acc, cur) => acc+cur)/arr.length;
 };
 
 AverageApp.prototype.getMax = function () {

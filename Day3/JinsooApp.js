@@ -28,7 +28,7 @@ class Jinsoo {
     filter(base, number, person, turn) {
         let newArr = [];
         for (let i = 0; i < number * person; i++)
-            if (i % person === turn - 1)//  
+            if (i % person === turn - 1)
                 newArr.push(this.convert(base, number, person)[i]);
         return newArr;
     };
