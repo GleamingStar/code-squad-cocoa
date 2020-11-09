@@ -6,17 +6,16 @@ class MyHashMap {
     getHash(key) {
         let hash = 0;
         let chr = 0;
-        for (let i = 0; i < key.length; i++) {
+        for (let i in key) {
             chr = key.charCodeAt(i);
-            // hash = 11 * hash + chr;
-            hash += 17*chr;
+            hash += 17 * chr;
         }
         return hash;
-    }
+    };
 
     put(key, value) {
         if (!this.containsKey(key))
-            this.hashMap[this.getHash(key)] = {[key] : value};
+            this.hashMap[this.getHash(key)] = { [key]: value };
     };
 
     remove(key) {
@@ -24,11 +23,7 @@ class MyHashMap {
     };
 
     containsKey(key) {
-        if (this.hashMap[this.getHash(key)])
-            return true;
-        else
-            return false;
-
+        return this.keys().includes(key);
     };
 
     get(key) {
@@ -36,10 +31,7 @@ class MyHashMap {
     };
 
     isEmpty() {
-        if (Object.keys(this.hashMap).length === 0)
-            return true;
-        else
-            return false;
+        return Boolean(this.keys().length === 0);
     };
 
     keys() {
@@ -51,7 +43,7 @@ class MyHashMap {
     };
 
     replace(key, value) {
-        this.hashMap[this.getHash(key)] = {[key]: value}
+        this.hashMap[this.getHash(key)] = { [key]: value }
     };
 
     size() {
@@ -77,4 +69,4 @@ test.remove('rash')
 console.log(test.keys())
 test.replace('crong', 'front-end master');
 console.log(test.get('crong'));
-console.log(test.size())
+console.log(test.size()) 
