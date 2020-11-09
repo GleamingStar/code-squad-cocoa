@@ -17,9 +17,7 @@ class MyHashMap {
         return hash;
     };
 
-    put(key, value, hash) {
-        if (!hash)
-            hash = this.getHash(key);
+    put(key, value, hash = this.getHash(key)) {
         if (this.size() >= 71)
             console.log("Hashtable이 꽉 찼습니다.");
         else if (this.hashMap[hash])
@@ -28,10 +26,8 @@ class MyHashMap {
             this.hashMap[hash] = { [key]: value };
     };
 
-    remove(key, hash) {
-        if (!hash)
-            hash = this.getHash(key);
-        if (key == Object.keys(this.hashMap[hash]))
+    remove(key, hash = this.getHash(key)) {
+        if (key === Object.keys(this.hashMap[hash])[0])
             delete this.hashMap[hash];
         else if (this.containsKey(key))
             this.remove(key, this.getDoubleHash(hash));
@@ -43,10 +39,8 @@ class MyHashMap {
         return this.keys().includes(key);
     };
 
-    get(key, hash) {
-        if (!hash)
-            hash = this.getHash(key);
-        if (key == Object.keys(this.hashMap[hash]))
+    get(key, hash = this.getHash(key)) {
+        if (key === Object.keys(this.hashMap[hash])[0])
             return this.hashMap[hash];
         else if (this.containsKey(key))
             this.get(key, this.getDoubleHash(hash));
@@ -62,14 +56,12 @@ class MyHashMap {
         const keysArray = [];
         for (const obj of this.hashMap)
             if (obj)
-                keysArray.push(Object.keys(obj));
+                keysArray.push(Object.keys(obj)[0]);
         return keysArray;
     };
 
-    replace(key, value, hash) {
-        if (!hash)
-            hash = this.getHash(key);
-        if (key == Object.keys(this.hashMap[hash]))
+    replace(key, value, hash = this.getHash(key)) {
+        if (key === Object.keys(this.hashMap[hash])[0])
             this.hashMap[hash] = { [key]: value }
         else if (this.containsKey(key))
             this.replace(key, value, this.getDoubleHash(hash));
@@ -78,11 +70,10 @@ class MyHashMap {
     };
 
     size() {
-        let count = 0;
-        for (const obj of this.hashMap)
-            if (obj)
-                count++;
-        return count;
+        return this.hashMap.reduce((acc, cur) => {
+            if (cur)
+                return acc + 1;
+        }, 0)
     };
 
     clear() {
