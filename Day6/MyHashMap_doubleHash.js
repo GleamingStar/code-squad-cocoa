@@ -12,15 +12,17 @@ class MyHashMap {
     };
 
     getDoubleHash(hash) {
-        return hash + hash % 17;
+        hash = hash + hash % 17
+        hash = hash > 71 ? hash - 71 : hash;
+        return hash;
     };
 
     put(key, value, hash) {
         if (!hash)
             hash = this.getHash(key);
-        if (this.hashMap.length >= 71)
+        if (this.size() >= 71)
             console.log("Hashtable이 꽉 찼습니다.")
-        else if (!this.containsKey(key, hash))
+        else if (!this.containsKey(key))
             this.hashMap[hash] = { [key]: value };
         else
             this.put(key, this.getDoubleHash(hash), value);
