@@ -21,11 +21,11 @@ class MyHashMap {
         if (!hash)
             hash = this.getHash(key);
         if (this.size() >= 71)
-            console.log("Hashtable이 꽉 찼습니다.")
+            console.log("Hashtable이 꽉 찼습니다.");
+        else if (this.hashMap[hash])
+            this.put(key, value, this.getDoubleHash(hash));
         else if (!this.containsKey(key))
             this.hashMap[hash] = { [key]: value };
-        else
-            this.put(key, this.getDoubleHash(hash), value);
     };
 
     remove(key, hash) {
