@@ -61,11 +61,11 @@ class MyHashMap {
 
 const test = new MyHashMap();
 test.put('spitz', "front-end");
-test.put('rash', "front-end");
+test.put('joy', "front-end");
 test.put('crong', 'front-end')
 console.log(test.get('crong'))
 console.log(test.keys())
-test.remove('rash')
+test.remove('joy')
 console.log(test.keys())
 test.replace('crong', 'front-end master');
 console.log(test.get('crong'));

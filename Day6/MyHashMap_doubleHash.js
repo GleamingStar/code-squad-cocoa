@@ -18,7 +18,9 @@ class MyHashMap {
     put(key, value, hash) {
         if (!hash)
             hash = this.getHash(key);
-        if (!this.containsKey(key, hash))
+        if (this.hashMap.length >= 71)
+            console.log("Hashtable이 꽉 찼습니다.")
+        else if (!this.containsKey(key, hash))
             this.hashMap[hash] = { [key]: value };
         else
             this.put(key, this.getDoubleHash(hash), value);
@@ -32,7 +34,7 @@ class MyHashMap {
         else if (this.containsKey(key))
             this.remove(key, this.getDoubleHash(hash));
         else
-            console.log("잘못된 key값 입력");
+            console.log("remove 실패 : 잘못된 key값 입력");
     };
 
     containsKey(key) {
@@ -88,12 +90,12 @@ class MyHashMap {
 
 const test = new MyHashMap();
 test.put('spitz', "front-end");
-test.put('rash', "front-end");
+test.put('joy', "front-end");
 test.put('crong', 'front-end');
 console.log(test.size());
 console.log(test.get('crong'));
 console.log(test.keys());
-test.remove('rash');
+test.remove('joy');
 console.log(test.keys());
 test.replace('crong', 'front-end master');
 console.log(test.get('crong'));
