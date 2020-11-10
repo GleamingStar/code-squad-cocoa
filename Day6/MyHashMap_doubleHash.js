@@ -4,11 +4,7 @@ class MyHashMap {
     };
 
     getHash(key) {
-        let hash = 0;
-        for (let i in key) {
-            hash += key.charCodeAt(i);
-        }
-        return hash % 71;
+        return key.split("").reduce((acc, cur)=> acc + cur.charCodeAt(0), 0)%71;
     };
 
     getDoubleHash(hash) {
@@ -85,6 +81,7 @@ const test = new MyHashMap();
 test.put('spitz', "front-end");
 test.put('joy', "front-end");
 test.put('crong', 'front-end');
+test.put('spizt', 'test')
 console.log(test.size());
 console.log(test.get('crong'));
 console.log(test.keys());

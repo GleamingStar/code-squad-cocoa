@@ -4,13 +4,7 @@ class MyHashMap {
     };
 
     getHash(key) {
-        let hash = 0;
-        let chr = 0;
-        for (let i in key) {
-            chr = key.charCodeAt(i);
-            hash += 17 * chr;
-        }
-        return hash;
+        return key.split("").reduce((acc, cur) => 2 * (acc + 7 * cur.charCodeAt(0)), 0);
     };
 
     put(key, value) {
@@ -38,7 +32,7 @@ class MyHashMap {
         const keysArray = [];
         for (const obj of this.hashMap)
             if (obj)
-                keysArray.push(Object.keys(obj));
+                keysArray.push(Object.keys(obj)[0]);
         return keysArray;
     };
 
@@ -47,11 +41,10 @@ class MyHashMap {
     };
 
     size() {
-        let count = 0;
-        for (const obj of this.hashMap)
-            if (obj)
-                count++;
-        return count;
+        return this.hashMap.reduce((acc, cur) => {
+            if (cur)
+                return acc + 1;
+        }, 0)
     };
 
     clear() {
