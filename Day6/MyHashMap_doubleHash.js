@@ -1,20 +1,22 @@
 class MyHashMap {
-    constructor() {
-        this.hashMap = [];
+    hashMap = [];
+
+    constructor(tableSize) {
+        this.tableSize = tableSize;
     };
 
     getHash(key) {
-        return key.split("").reduce((acc, cur)=> acc + cur.charCodeAt(0), 0)%71;
+        return key.split("").reduce((acc, cur) => acc + cur.charCodeAt(0), 0) % this.tableSize;
     };
 
     getDoubleHash(hash) {
         hash = hash + hash % 17
-        hash = hash > 71 ? hash - 71 : hash;
+        hash = hash > this.tableSize ? hash - this.tableSize : hash;
         return hash;
     };
 
     put(key, value, hash = this.getHash(key)) {
-        if (this.size() >= 71)
+        if (this.size() >= this.tableSize)
             console.log("Hashtable이 꽉 찼습니다.");
         else if (this.hashMap[hash])
             this.put(key, value, this.getDoubleHash(hash));
@@ -77,7 +79,7 @@ class MyHashMap {
     };
 }
 
-const test = new MyHashMap();
+const test = new MyHashMap(71);
 test.put('spitz', "front-end");
 test.put('joy', "front-end");
 test.put('crong', 'front-end');

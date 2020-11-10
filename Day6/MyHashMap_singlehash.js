@@ -1,10 +1,10 @@
 class MyHashMap {
-    constructor() {
-        this.hashMap = [];
-    };
+    hashMap = [];
 
     getHash(key) {
-        return key.split("").reduce((acc, cur) => 2 * (acc + 7 * cur.charCodeAt(0)), 0);
+        const encryptionVariable1 = 2;
+        const encryptionVariable2 = 7;
+        return key.split("").reduce((acc, cur) => encryptionVariable1 * (acc + encryptionVariable2 * cur.charCodeAt(0)), 0);
     };
 
     put(key, value) {
