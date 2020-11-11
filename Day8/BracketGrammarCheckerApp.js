@@ -1,10 +1,10 @@
 class BracketGrammarChecker {
     stack = [];
-    
+
     elementCount = 0;
 
     constructor(data) {
-        this.data = data
+        this.data = data;
     };
 
     run() {
@@ -18,19 +18,20 @@ class BracketGrammarChecker {
     };
 
     pushData() {
-        const newData = this.data.split(",")
-        let arr = [];
+        const newData = this.data.split(",");
         this.elementCount += newData.length;
+
+        let arr = [];
+
         for (let i of newData) {
             if (i.includes('[')) {
                 if (arr.length > 0)
                     this.stack.push(arr);
                 arr = [];
             }
-            arr.push(parseInt(i.replace(/[^0-9]/g, ''), 10));
-            if (i.includes(']'))
-                this.stack.push(arr);
+            arr.push(parseInt(i.replace(/[^0-9]/g, ''), 10));    
         }
+        this.stack.push(arr);
     };
 
     checkBracketOrder() {
@@ -53,10 +54,10 @@ class BracketGrammarChecker {
 
     printStructure() {
         console.log(`{\n` + `  "type" : "root",\n` + `  "child : [`);
-        for (let i = 0; i < this.stack.length; i++) {
-            console.log(`{\n` + `  "type" : "array",\n` + `  "child" : [ `)
-            for (let j = 0; j < this.stack[i].length; j++)
-                console.log(`{\n` + `  "type": "${typeof this.stack[i][j]}",\n` + `  "value" : "${this.stack[i][j]}",\n` + `  "child" : []\n` + `},`);
+        for (let i of this.stack) {
+            console.log(`{\n` + `  "type" : "array",\n` + `  "child" : [ `);
+            for (let j of i)
+                console.log(`{\n` + `  "type": "${typeof j}",\n` + `  "value" : "${j}",\n` + `  "child" : []\n` + `},`);
         }
         for (let i = 0; i < this.stack.length + 1; i++)
             console.log(`]\n` + `}`);
@@ -70,13 +71,13 @@ class BracketGrammarChecker {
 const data0 = "[1,2,[3,4,[5,[6]]]]";
 const data1 = "[1,2,[3,4,[5,[6]]";
 const data2 = "[1,[2,[3,[4,5,6,7,8,[9,[10]]]]]]";
-const data3 = "[1,[2,[3,]4[]]]"
+const data3 = "[1,[2,[3,]4[]]]";
 
 const test0 = new BracketGrammarChecker(data0);
-test0.run()
+test0.run();
 // const test1 = new BracketGrammarChecker(data1);
-// test1.run()
+// test1.run();
 const test2 = new BracketGrammarChecker(data2);
-test2.run()
+test2.run();
 const test3 = new BracketGrammarChecker(data3);
-test3.run()
+test3.run();

@@ -68,10 +68,7 @@ class MyHashMap {
     };
 
     size() {
-        return this.hashMap.reduce((acc, cur) => {
-            if (cur)
-                return acc + 1;
-        }, 0)
+        return this.hashMap.reduce((acc, cur) => acc + (cur ? 1 : 0), 0)
     };
 
     clear() {
