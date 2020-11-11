@@ -1,33 +1,45 @@
 class BracketGrammarChecker {
     stack = [];
+    
     elementCount = 0;
+
     constructor(data) {
         this.data = data
-    }
+    };
 
     run() {
-        if (!this.checkBracket())
+        if (!this.checkBracketCount())
             return console.log('닫는 괄호가 일치하지 않습니다.');
+        if (!this.checkBracketOrder())
+            return console.log('괄호 순서가 적절하지 않습니다.');
         this.pushData();
         this.printResult();
         this.printStructure();
     };
 
     pushData() {
-        const newData = this.data.replace(/,/g, '');
-        let counts = 0;
-        for (let i in newData) {
-            counts++;
-            if (newData[i] === '[' || newData[i] === ']') {
-                if (counts > 1)
-                    this.stack.push(newData.slice(i - counts + 1, i));
-                this.elementCount += counts - 1;
-                counts = 0;
+        const newData = this.data.split(",")
+        let arr = [];
+        this.elementCount += newData.length;
+        for (let i of newData) {
+            if (i.includes('[')) {
+                if (arr.length > 0)
+                    this.stack.push(arr);
+                arr = [];
             }
+            arr.push(parseInt(i.replace(/[^0-9]/g, ''), 10));
+            if (i.includes(']'))
+                this.stack.push(arr);
         }
     };
 
-    checkBracket() {
+    checkBracketOrder() {
+        const filteredData = this.data.replace(/[^\[\]]/g, '').split('');
+        const orderedData = filteredData.slice().sort();
+        return filteredData.join('') === orderedData.join('');
+    };
+
+    checkBracketCount() {
         let openBracket = 0;
         let closedBracket = 0;
         for (let i of this.data) {
@@ -51,15 +63,20 @@ class BracketGrammarChecker {
     };
 
     printResult() {
-        console.log(this.stack)
         return console.log(`깊이 수준은 ${this.stack.length}이며, 총 ${this.elementCount}개의 원소가 포함되어 있습니다.`);
     };
 };
-const data = "[1,2,[3,4,[5,[6]]]]";
-const data1 = "[1,2,[3,4,[5,[6]]";
-const data2 = "[1,[2,[3,[4,5,6,[7,[8]]]]]]";
 
-const test = new BracketGrammarChecker(data);
-test.run()
-const test2 = new BracketGrammarChecker(data2)
+const data0 = "[1,2,[3,4,[5,[6]]]]";
+const data1 = "[1,2,[3,4,[5,[6]]";
+const data2 = "[1,[2,[3,[4,5,6,7,8,[9,[10]]]]]]";
+const data3 = "[1,[2,[3,]4[]]]"
+
+const test0 = new BracketGrammarChecker(data0);
+test0.run()
+// const test1 = new BracketGrammarChecker(data1);
+// test1.run()
+const test2 = new BracketGrammarChecker(data2);
 test2.run()
+const test3 = new BracketGrammarChecker(data3);
+test3.run()
