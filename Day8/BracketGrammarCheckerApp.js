@@ -5,15 +5,15 @@ function BracketGrammarChecker(data) {
 };
 
 BracketGrammarChecker.prototype.run = function () {
-    if (!this.checkBracketCount())
+    if (!this.isBracketMatched())
         return console.log('닫는 괄호가 일치하지 않습니다.');
-    if (!this.checkBracketOrder())
+    if (!this.isBracketOrdered())
         return console.log('괄호 순서가 적절하지 않습니다.');
-    this.pushData();
+    this.setStack();
     this.printResult();
 };
 
-BracketGrammarChecker.prototype.pushData = function () {
+BracketGrammarChecker.prototype.setStack = function () {
     const newData = this.data.split(",");
     this.elementCount += newData.length;
 
@@ -25,18 +25,18 @@ BracketGrammarChecker.prototype.pushData = function () {
                 this.stack.push(arr);
             arr = [];
         }
-        arr.push(parseInt(i.replace(/[^0-9]/g, ''), 10));
+        arr.push(i.replace(/[\[\]]/g, ''));
     }
     this.stack.push(arr);
 };
 
-BracketGrammarChecker.prototype.checkBracketOrder = function () {
+BracketGrammarChecker.prototype.isBracketOrdered = function () {
     const filteredData = this.data.replace(/[^\[\]]/g, '').split('');
     const orderedData = filteredData.slice().sort();
     return filteredData.join('') === orderedData.join('');
 };
 
-BracketGrammarChecker.prototype.checkBracketCount = function () {
+BracketGrammarChecker.prototype.isBracketMatched = function () {
     let openBracket = 0;
     let closedBracket = 0;
     for (let i of this.data) {
@@ -56,23 +56,28 @@ BracketGrammarChecker.prototype.getStructure = function () {
 
     let targetChild = structure.child;
     let targetChildIndex = 0;
+
     for (let i of this.stack) {
         targetChild.push({
             type: "array",
             child: []
         });
-        for (let j of i) {
+        i.forEach(element => {
             targetChild[targetChildIndex].child.push({
-                type: typeof j,
-                value: j,
+                type: this.getType(element),
+                value: element,
                 child: []
             });
-        }
+        });
         targetChild = targetChild[targetChildIndex].child;
         targetChildIndex = i.length;
     }
-    
+
     return structure;
+};
+
+BracketGrammarChecker.prototype.getType = function (data) {
+    return /[^0-9]/g.test(data) ? 'string' : 'number';
 };
 
 BracketGrammarChecker.prototype.printResult = function () {
@@ -82,7 +87,7 @@ BracketGrammarChecker.prototype.printResult = function () {
 
 const data0 = "[1,2,[3,4,[5,[6]]]]";
 const data1 = "[1,2,[3,4,[5,[6]]";
-const data2 = "[1,[2,[3,[4,5,6,7,8,[9,[10]]]]]]";
+const data2 = "[1,[2,[3,[4,5,6숫7자8혼9합,7,8,[문자열,[10]]]]]]";
 const data3 = "[1,[2,[3,]4[]]]";
 
 const test0 = new BracketGrammarChecker(data0);
