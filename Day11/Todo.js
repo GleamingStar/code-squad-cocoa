@@ -29,13 +29,13 @@ class View {
     addCheckBox(target, event) {
         const checkbox = document.createElement("input");
         checkbox.setAttribute("type", "checkbox");
-        checkbox.addEventListener("click", event);
+        checkbox.addEventListener("change", event);
         target.append(checkbox);
     }
 
     addDeleteButton(target, event) {
         const deleteButton = document.createElement("button");
-        deleteButton.innerHTML = "Del";
+        deleteButton.innerHTML = "<img src=\"trashbin.png\" width=\"100%\"></img>";
         deleteButton.addEventListener("click", event);
         target.append(deleteButton);
     }
