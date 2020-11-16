@@ -1,0 +1,16 @@
+.checked {
+    text-decoration: line-through;
+  }
+  .todo {
+    border : 1px solid;
+    width : 400px;
+  /*   height : 20px; */
+  }
+  .todo input {
+    float: left;
+  }
+  .todo button {
+  /*   position : absolute;
+    left : 275px; */
+    float : right;
+  }
