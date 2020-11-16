@@ -19,11 +19,11 @@ class Model {
 }
 class View {
 
-    createTodo(input) {
-        const todo = document.createElement("div");
-        todo.classList.add("todo");
-        todo.append(input);
-        return todo;
+    createToDo(input) {
+        const toDo = document.createElement("div");
+        toDo.classList.add("toDo");
+        toDo.append(input);
+        return toDo;
     }
 
     addCheckBox(target, event) {
@@ -48,14 +48,14 @@ class Controller {
     }
 
     input = document.querySelector("#input");
-    add = document.querySelector("#add");
+    addbtn = document.querySelector("#addbtn");
     list = document.querySelector("#list");
 
     init() {
-        this.add.addEventListener("click", this.addToDo.bind(this));
+        this.addbtn.addEventListener("click", this.addToDo.bind(this));
         this.input.addEventListener("keypress", e => {
             if (e.keyCode === 13) {
-                this.add.click();
+                this.addbtn.click();
             }
         });
     }
@@ -63,14 +63,15 @@ class Controller {
     addToDo() {
         if (this.model.isEmpty(this.input.value))
             return alert("입력칸이 비어있습니다!");
-        const todo = this.view.createTodo(this.input.value);
+
+        const toDo = this.view.createToDo(this.input.value);
         this.input.value = '';
 
-        this.view.addCheckBox(todo, this.model.checkEvent);
+        this.view.addCheckBox(toDo, this.model.checkEvent);
 
-        this.view.addDeleteButton(todo, this.model.deleteEvent);
+        this.view.addDeleteButton(toDo, this.model.deleteEvent);
 
-        this.list.append(todo);
+        this.list.append(toDo);
     }
 }
 
