@@ -66,6 +66,7 @@ class Controller {
 
         const toDo = this.view.createToDo(this.input.value);
         this.input.value = '';
+        this.input.focus();
 
         this.view.addCheckBox(toDo, this.model.checkEvent);
 

@@ -1,5 +1,6 @@
 .checked {
     text-decoration: line-through;
+    color : rgba(0, 0, 0, 0.5);
   }
   #input{
     margin-left: 20px;
