@@ -1,5 +1,12 @@
 class Model {
 
+    createToDo(input) {
+        const toDo = document.createElement("div");
+        toDo.classList.add("toDo");
+        toDo.append(input);
+        return toDo;
+    }
+
     isEmpty(input) {
         return input.replace(/ /g, '').length === 0;
     }
@@ -18,13 +25,6 @@ class Model {
     }
 }
 class View {
-
-    createToDo(input) {
-        const toDo = document.createElement("div");
-        toDo.classList.add("toDo");
-        toDo.append(input);
-        return toDo;
-    }
 
     addCheckBox(target, event) {
         const checkbox = document.createElement("input");
@@ -64,7 +64,7 @@ class Controller {
         if (this.model.isEmpty(this.input.value))
             return alert("입력칸이 비어있습니다!");
 
-        const toDo = this.view.createToDo(this.input.value);
+        const toDo = this.model.createToDo(this.input.value);
         this.input.value = '';
         this.input.focus();
 
