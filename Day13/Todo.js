@@ -11,19 +11,42 @@ class Model {
     }
 
     deleteEvent() {
-        const target = this.parentNode;
+        const target = this.parentNode
         target.remove();
     }
 
-    deleteAllEvent(e) {
-        //checkbox 의존성 낮추는 방법 모색
+    deleteCheckedEvent() {
         const target = document.querySelectorAll('.toDo');
-        const checkBox = document.querySelector('#allCheck');
         target.forEach(element => {
             if (element.querySelector('input').checked)
                 element.remove()
         });
+
+        const checkBox = document.querySelector('#allCheck');
         checkBox.checked = false;
+    }
+
+    editBtnEvent(e) {
+        e.target.parentNode.lastChild.remove();
+        e.target.parentNode.append(this.addEditBox());
+        e.target.parentNode.lastChild.querySelector('input').focus();
+    }
+
+    addEditBox() {
+        const newText = document.createElement('div');
+        const inputText = document.createElement('input');
+        inputText.setAttribute("placeholder", "Press enter after typing");
+        inputText.addEventListener("keypress", this.editBoxEvent.bind(this));
+        inputText.style = 'border-radius: 5px; border: 1px solid lightslategray;';
+        newText.append(inputText);
+        return newText;
+    }
+
+    editBoxEvent(event) {
+        if (event.keyCode === 13 && !this.isEmpty(event.target.value)) {
+            event.target.parentNode.append(event.target.value)
+            event.target.remove();
+        }
     }
 }
 class View {
@@ -36,19 +59,24 @@ class View {
 
     addDeleteButton(target, event) {
         const deleteButton = document.createElement("button");
-        deleteButton.classList.add('delBtn')
         deleteButton.innerHTML = "<img src=\"trashbin.png\" width=\"100%\"></img>";
         deleteButton.addEventListener("click", event);
         target.append(deleteButton);
     }
 
+    addEditButton(target, event) {
+        const editButton = document.createElement("button");
+        editButton.innerHTML = "✎";
+        editButton.addEventListener("click", event);
+        target.append(editButton);
+    }
+
     checkAllEvent(e) {
-        const checkBoxList = document.querySelectorAll('input')
+        const checkBoxList = document.querySelectorAll('input');
         if (e.target.checked)
             checkBoxList.forEach(element => element.checked = true);
         else
             checkBoxList.forEach(element => element.checked = false);
-
     }
 }
 class Controller {
@@ -62,16 +90,15 @@ class Controller {
     addbtn = document.querySelector("#addbtn");
     list = document.querySelector("#list");
     allCheck = document.querySelector('#allCheck');
-    allDelete = document.querySelector('#delbtn')
+    delBtn = document.querySelector('#delbtn');
 
     init() {
         this.allCheck.addEventListener("change", this.view.checkAllEvent)
-        this.allDelete.addEventListener("click", this.model.deleteAllEvent)
+        this.delBtn.addEventListener("click", this.model.deleteCheckedEvent)
         this.addbtn.addEventListener("click", this.addToDo.bind(this));
         this.input.addEventListener("keypress", e => {
-            if (e.keyCode === 13) {
+            if (e.keyCode === 13)
                 this.addbtn.click();
-            }
         });
     }
 
@@ -79,6 +106,13 @@ class Controller {
         if (this.model.isEmpty(this.input.value))
             return alert("입력칸이 비어있습니다!");
 
+        this.list.append(this.createToDo());
+
+        this.input.value = '';
+        this.input.focus();
+    }
+
+    createToDo() {
         const toDo = document.createElement("div");
         toDo.classList.add("toDo");
 
@@ -86,11 +120,10 @@ class Controller {
 
         this.view.addDeleteButton(toDo, this.model.deleteEvent);
 
-        this.model.addText(toDo, this.input.value);
-        this.input.value = '';
-        this.input.focus();
+        this.view.addEditButton(toDo, this.model.editBtnEvent.bind(this.model))
 
-        this.list.append(toDo);
+        this.model.addText(toDo, this.input.value);
+        return toDo;
     }
 }
 
