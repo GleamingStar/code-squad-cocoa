@@ -40,9 +40,6 @@ img {
   max-height: 1rem;
   width: auto;
 }
-.toDo {
+.toDo:not(:last-child) {
   border-bottom: 2px solid lightsteelblue;
-}
-.toDo:last-child {
-  border-bottom: 2px solid lightslategray;
 }

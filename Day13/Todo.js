@@ -11,7 +11,7 @@ class Model {
     }
 
     deleteEvent() {
-        const target = this.parentNode
+        const target = this.parentNode;
         target.remove();
     }
 
@@ -19,17 +19,17 @@ class Model {
         const target = document.querySelectorAll('.toDo');
         target.forEach(element => {
             if (element.querySelector('input').checked)
-                element.remove()
+                element.remove();
         });
 
         const checkBox = document.querySelector('#allCheck');
         checkBox.checked = false;
     }
 
-    editBtnEvent(e) {
-        e.target.parentNode.lastChild.remove();
-        e.target.parentNode.append(this.addEditBox());
-        e.target.parentNode.lastChild.querySelector('input').focus();
+    editBtnEvent({target}) {
+        target.parentNode.lastChild.remove();
+        target.parentNode.append(this.addEditBox());
+        target.parentNode.lastChild.querySelector('input').focus();
     }
 
     addEditBox() {
@@ -44,7 +44,7 @@ class Model {
 
     editBoxEvent(event) {
         if (event.keyCode === 13 && !this.isEmpty(event.target.value)) {
-            event.target.parentNode.append(event.target.value)
+            event.target.parentNode.append(event.target.value);
             event.target.remove();
         }
     }
