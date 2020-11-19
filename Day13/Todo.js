@@ -1,9 +1,19 @@
+const _ = {
+    createEl : function(tag, base = document) {
+        return base.createElement(tag)
+    },
+
+    selector : function(selector, base = document) {
+        return base.querySelector(selector);
+    }
+}
+
 class Model {
 
-    addText(target, input) {
-        const textBox = document.createElement("div");
+    addText(targetNode, input) {
+        const textBox = _.createEl("div");
         textBox.append(input);
-        target.append(textBox);
+        targetNode.append(textBox);
     }
 
     isEmpty(input) {
@@ -11,69 +21,63 @@ class Model {
     }
 
     deleteEvent() {
-        const target = this.parentNode;
-        target.remove();
+        this.parentNode.remove();
     }
 
     deleteCheckedEvent() {
-        const target = document.querySelectorAll('.toDo');
-        target.forEach(element => {
-            if (element.querySelector('input').checked)
+        const list = document.querySelectorAll('.toDo');
+        list.forEach(element => {
+            if (_.selector('input', element).checked)
                 element.remove();
         });
 
-        const checkBox = document.querySelector('#allCheck');
+        const checkBox = _.selector('#allCheck');
         checkBox.checked = false;
     }
 
     editBtnEvent({target}) {
-        target.parentNode.lastChild.remove();
-        target.parentNode.append(this.addEditBox());
-        target.parentNode.lastChild.querySelector('input').focus();
+        const parent = target.parentNode;
+        parent.lastChild.remove();
+        parent.append(this.addEditTable());
+        _.selector('input',parent.lastChild).focus();
     }
 
-    addEditBox() {
-        const newText = document.createElement('div');
-        const inputText = document.createElement('input');
+    addEditTable() {
+        const newText = _.createEl('div');
+        const inputText = _.createEl('input');
         inputText.setAttribute("placeholder", "Press enter after typing");
-        inputText.addEventListener("keypress", this.editBoxEvent.bind(this));
+        inputText.addEventListener("keypress", this.editTableEvent.bind(this));
         inputText.style = 'border-radius: 5px; border: 1px solid lightslategray;';
         newText.append(inputText);
         return newText;
     }
 
-    editBoxEvent(event) {
-        if (event.keyCode === 13 && !this.isEmpty(event.target.value)) {
-            event.target.parentNode.append(event.target.value);
-            event.target.remove();
+    editTableEvent({target, keyCode}) {
+        if (keyCode === 13 && !this.isEmpty(target.value)) {
+            target.parentNode.append(target.value);
+            target.remove();
         }
     }
 }
 class View {
 
-    addCheckBox(target) {
-        const checkbox = document.createElement("input");
-        checkbox.setAttribute("type", "checkbox");
-        target.append(checkbox);
+    addBox(targetNode, type) {
+        const checkbox = _.createEl("input");
+        checkbox.setAttribute("type", type);
+        targetNode.append(checkbox);
     }
 
-    addDeleteButton(target, event) {
-        const deleteButton = document.createElement("button");
-        deleteButton.innerHTML = "<img src=\"trashbin.png\" width=\"100%\"></img>";
-        deleteButton.addEventListener("click", event);
-        target.append(deleteButton);
+
+    addButton(targetNode, eventHandler, content) {
+        const button = _.createEl("button");
+        button.innerHTML = content;
+        button.addEventListener("click", eventHandler);
+        targetNode.append(button);
     }
 
-    addEditButton(target, event) {
-        const editButton = document.createElement("button");
-        editButton.innerHTML = "✎";
-        editButton.addEventListener("click", event);
-        target.append(editButton);
-    }
-
-    checkAllEvent(e) {
+    checkAllEvent({target}) {
         const checkBoxList = document.querySelectorAll('input');
-        if (e.target.checked)
+        if (target.checked)
             checkBoxList.forEach(element => element.checked = true);
         else
             checkBoxList.forEach(element => element.checked = false);
@@ -84,17 +88,21 @@ class Controller {
     constructor(model, view) {
         this.model = model;
         this.view = view;
+        this.init();
     }
 
-    input = document.querySelector("#input");
-    addbtn = document.querySelector("#addbtn");
-    list = document.querySelector("#list");
-    allCheck = document.querySelector('#allCheck');
-    delBtn = document.querySelector('#delbtn');
+    input = _.selector("#input");
+    addbtn = _.selector("#addbtn");
+    list = _.selector("#list");
+    allCheck = _.selector('#allCheck');
+    delBtn = _.selector('#delbtn');
+
+    delBtnIcon = "<img src=\"trashbin.png\" width=\"100%\"></img>";
+    editBtnIcon = "✎";
 
     init() {
-        this.allCheck.addEventListener("change", this.view.checkAllEvent)
-        this.delBtn.addEventListener("click", this.model.deleteCheckedEvent)
+        this.allCheck.addEventListener("change", this.view.checkAllEvent);
+        this.delBtn.addEventListener("click", this.model.deleteCheckedEvent);
         this.addbtn.addEventListener("click", this.addToDo.bind(this));
         this.input.addEventListener("keypress", e => {
             if (e.keyCode === 13)
@@ -113,14 +121,14 @@ class Controller {
     }
 
     createToDo() {
-        const toDo = document.createElement("div");
+        const toDo = _.createEl("div");
         toDo.classList.add("toDo");
 
-        this.view.addCheckBox(toDo);
+        this.view.addBox(toDo, "checkbox");
 
-        this.view.addDeleteButton(toDo, this.model.deleteEvent);
+        this.view.addButton(toDo, this.model.deleteEvent, this.delBtnIcon);
 
-        this.view.addEditButton(toDo, this.model.editBtnEvent.bind(this.model))
+        this.view.addButton(toDo, this.model.editBtnEvent.bind(this.model), this.editBtnIcon);
 
         this.model.addText(toDo, this.input.value);
         return toDo;
@@ -129,5 +137,4 @@ class Controller {
 
 const model = new Model();
 const view = new View();
-const test = new Controller(model, view);
-test.init();
+new Controller(model, view);
