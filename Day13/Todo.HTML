@@ -11,17 +11,18 @@
 <body>
     <h2> To Do List </h2>
 
-    <input type="text" id="input" placeholder="New Task">
+    <input type="text" id="inputbox" placeholder="New Task">
     <button id="addbtn">Add</button>
+    <span id="alertbox">입력칸이 비어있습니다!</span>
     <br>
     <br>
-    <div id="frame">
-        <div id="topframe">
+    <div class="container">
+        <div class="topbar">
             <input type="checkbox" id="allCheck">
             <button id=delbtn><img src="trashbin.png" width="100%"></img></button>
         </div>
-        <div id="list">
-        </div>
+        <ul id="list">
+        </ul>
     </div>
     <script src="Todo.js"></script>
 

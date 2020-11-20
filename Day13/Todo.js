@@ -1,9 +1,9 @@
 const _ = {
-    createEl : function(tag, base = document) {
+    createEl: function (tag, base = document) {
         return base.createElement(tag)
     },
 
-    selector : function(selector, base = document) {
+    $: function (selector, base = document) {
         return base.querySelector(selector);
     }
 }
@@ -12,6 +12,7 @@ class Model {
 
     addText(targetNode, input) {
         const textBox = _.createEl("div");
+        textBox.classList.add('text')
         textBox.append(input);
         targetNode.append(textBox);
     }
@@ -27,32 +28,30 @@ class Model {
     deleteCheckedEvent() {
         const list = document.querySelectorAll('.toDo');
         list.forEach(element => {
-            if (_.selector('input', element).checked)
+            if (_.$('input', element).checked)
                 element.remove();
         });
 
-        const checkBox = _.selector('#allCheck');
+        const checkBox = _.$('#allCheck');
         checkBox.checked = false;
     }
 
-    editBtnEvent({target}) {
+    editBtnEvent({ target }) {
         const parent = target.parentNode;
         parent.lastChild.remove();
-        parent.append(this.addEditTable());
-        _.selector('input',parent.lastChild).focus();
+        this.addEditTable(parent);
+        _.$('input', parent.lastChild).focus();
     }
 
-    addEditTable() {
-        const newText = _.createEl('div');
+    addEditTable(targetNode) {
         const inputText = _.createEl('input');
-        inputText.setAttribute("placeholder", "Press enter after typing");
+        inputText.setAttribute("placeholder", "Press enter to confirm");
         inputText.addEventListener("keypress", this.editTableEvent.bind(this));
-        inputText.style = 'border-radius: 5px; border: 1px solid lightslategray;';
-        newText.append(inputText);
-        return newText;
+        inputText.style = 'border-radius: 5px; border: 1px solid;';
+        this.addText(targetNode, inputText);
     }
 
-    editTableEvent({target, keyCode}) {
+    editTableEvent({ target, keyCode }) {
         if (keyCode === 13 && !this.isEmpty(target.value)) {
             target.parentNode.append(target.value);
             target.remove();
@@ -67,7 +66,6 @@ class View {
         targetNode.append(checkbox);
     }
 
-
     addButton(targetNode, eventHandler, content) {
         const button = _.createEl("button");
         button.innerHTML = content;
@@ -75,12 +73,20 @@ class View {
         targetNode.append(button);
     }
 
-    checkAllEvent({target}) {
+    checkAllEvent({ target }) {
         const checkBoxList = document.querySelectorAll('input');
         if (target.checked)
             checkBoxList.forEach(element => element.checked = true);
         else
             checkBoxList.forEach(element => element.checked = false);
+    }
+
+    alertOn({ style }) {
+        style.display = 'inline';
+    }
+
+    alertOFF({ style }) {
+        style.display = 'none';
     }
 }
 class Controller {
@@ -91,11 +97,12 @@ class Controller {
         this.init();
     }
 
-    input = _.selector("#input");
-    addbtn = _.selector("#addbtn");
-    list = _.selector("#list");
-    allCheck = _.selector('#allCheck');
-    delBtn = _.selector('#delbtn');
+    input = _.$("#inputbox");
+    addBtn = _.$("#addbtn");
+    list = _.$("#list");
+    alert = _.$("#alertbox")
+    allCheck = _.$('#allCheck');
+    delBtn = _.$('#delbtn');
 
     delBtnIcon = "<img src=\"trashbin.png\" width=\"100%\"></img>";
     editBtnIcon = "✎";
@@ -103,16 +110,17 @@ class Controller {
     init() {
         this.allCheck.addEventListener("change", this.view.checkAllEvent);
         this.delBtn.addEventListener("click", this.model.deleteCheckedEvent);
-        this.addbtn.addEventListener("click", this.addToDo.bind(this));
+        this.addBtn.addEventListener("click", this.addToDo.bind(this));
         this.input.addEventListener("keypress", e => {
             if (e.keyCode === 13)
-                this.addbtn.click();
+                this.addBtn.click();
         });
     }
 
     addToDo() {
         if (this.model.isEmpty(this.input.value))
-            return alert("입력칸이 비어있습니다!");
+            return this.view.alertOn(this.alert);
+        this.view.alertOFF(this.alert);
 
         this.list.append(this.createToDo());
 
@@ -121,7 +129,7 @@ class Controller {
     }
 
     createToDo() {
-        const toDo = _.createEl("div");
+        const toDo = _.createEl("li");
         toDo.classList.add("toDo");
 
         this.view.addBox(toDo, "checkbox");
