@@ -20,7 +20,7 @@ SmartDropDown.prototype.init = function () {
     topList.addEventListener("mouseenter", () => this.isOn = true);
 
     ul.addEventListener("mouseleave", () => {
-        this.onOff = false;
+        this.isOn = false;
         list.style.display = "none";
     });
 
