@@ -1,0 +1,22 @@
+ul{
+    list-style : none;
+    width: 12rem;
+    padding : 0px;
+}
+ul li{
+    width : 12rem;
+    padding: 0.8rem;
+}
+#top_list{
+    text-align : center;
+    border : 1px solid;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+#list{
+    display : none;
+}
+#list li{
+    margin-top : 1rem;
+    background-color : orange;
+}

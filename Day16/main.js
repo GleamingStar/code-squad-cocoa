@@ -1,7 +1,11 @@
-const ul = document.querySelector("ul");
-const list = document.querySelector('#list');
-const topList = document.querySelector("#toplist");
-const consoleBox = document.querySelector('#consoleBox');
+const _ = {
+    $: (selector, base = document) => base.querySelector(selector)
+}
+
+const ul = _.$("ul");
+const list = _.$('#list');
+const topList = _.$("#top_list");
+const fruits = _.$('#fruits_box');
 
 const SmartDropDown = function () {
     this.isOn = false;
@@ -29,8 +33,9 @@ SmartDropDown.prototype.refreshList = function () {
     const template = [];
     for (key in this.box)
         template.push(key + ' : ' + this.box[key]);
-    consoleBox.innerHTML = template.join('<br>');
+    fruits.innerHTML = template.join('<br>');
 }
+
 SmartDropDown.prototype.onEvent = function () {
     if (this.isOn)
         list.style.display = "block";
