@@ -31,7 +31,7 @@ SmartDropDown.prototype.init = function () {
 
 SmartDropDown.prototype.refreshList = function () {
     const template = [];
-    for (key in this.box)
+    for (let key in this.box)
         template.push(key + ' : ' + this.box[key]);
     fruits.innerHTML = template.join('<br>');
 }
@@ -43,7 +43,7 @@ SmartDropDown.prototype.onEvent = function () {
 
 SmartDropDown.prototype.overEvent = function (e) {
     const text = e.target.innerHTML;
-    if (this.isDelayed && text.length < 20) {
+    if (this.isDelayed && e.target.tagName === 'LI') {
         if (this.box[text])
             this.box[text]++;
         else
