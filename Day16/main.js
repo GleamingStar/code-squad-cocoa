@@ -1,57 +1,51 @@
 const _ = {
-    $: (selector, base = document) => base.querySelector(selector)
-}
+  $: (selector, base = document) => base.querySelector(selector),
+};
 
 const ul = _.$("ul");
-const list = _.$('#list');
+const list = _.$("#list");
 const topList = _.$("#top_list");
-const fruits = _.$('#fruits_box');
+const fruits = _.$("#fruits_box");
 
 const SmartDropDown = function () {
-    this.isOn = false;
-    this.isDelayed = true;
-    this.box = {};
-    this.init();
-}
+  this.timer;
+  this.isDelayed = true;
+  this.box = {};
+  this.init();
+};
 
 SmartDropDown.prototype.init = function () {
-    setInterval(() => this.isDelayed = true, 500)
+  ul.addEventListener("mouseleave", () => {
+    clearTimeout(this.timer);
+    list.style.display = "none";
+  });
 
-    topList.addEventListener("mouseenter", () => this.isOn = true);
+  topList.addEventListener("mouseover", this.onEvent.bind(this));
 
-    ul.addEventListener("mouseleave", () => {
-        this.isOn = false;
-        list.style.display = "none";
-    });
-
-    topList.addEventListener("mouseover", () => setTimeout(this.onEvent.bind(this), 1000));
-
-    list.addEventListener("mousemove", this.overEvent.bind(this));
-}
+  list.addEventListener("mousemove", this.overEvent.bind(this));
+};
 
 SmartDropDown.prototype.refreshList = function () {
-    const template = [];
-    for (let key in this.box)
-        template.push(key + ' : ' + this.box[key]);
-    fruits.innerHTML = template.join('<br>');
-}
+  const template = [];
+  for (let key in this.box) template.push(key + " : " + this.box[key]);
+  fruits.innerHTML = template.join("<br>");
+};
 
 SmartDropDown.prototype.onEvent = function () {
-    if (this.isOn)
-        list.style.display = "block";
-}
+  this.timer = setTimeout(() => {
+    list.style.display = "block";
+  }, 1000);
+};
 
-SmartDropDown.prototype.overEvent = function (e) {
-    const text = e.target.innerHTML;
-    if (this.isDelayed && e.target.tagName === 'LI') {
-        if (this.box[text])
-            this.box[text]++;
-        else
-            this.box[text] = 1;
-        this.refreshList();
-        this.isDelayed = false;
-    }
-}
+SmartDropDown.prototype.overEvent = function ({target}) {
+  const text = target.innerHTML;
+  if (this.isDelayed && target.tagName === "LI") {
+    if (this.box[text]) this.box[text]++;
+    else this.box[text] = 1;
+    this.refreshList();
+    this.isDelayed = false;
+    setTimeout(() => (this.isDelayed = true), 500);
+  }
+};
 
 new SmartDropDown();
-
