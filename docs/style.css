@@ -1,0 +1,63 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+h1 {
+  text-align: center;
+  border-bottom: 1px solid;
+}
+#grid {
+  display: grid;
+  grid-template-columns: 25% 1fr;
+}
+#grid #game {
+  padding-left: 25px;
+}
+#grid p {
+  padding: 1rem;
+  border-right: 1px solid;
+  height: 40rem;
+}
+#score_board {
+  text-align: center;
+  margin: 1rem;
+  width: 90%;
+  height: 55%;
+  border: 1px solid;
+  background-color: rgb(37, 35, 35);
+  color: white;
+}
+table {
+  margin-top: 1rem;
+  margin-left: auto;
+  margin-right:auto;
+  width: 90%;
+  border: 1px solid whitesmoke;
+}
+td, td{
+  border: 1px solid white;
+}
+#input_box{
+  text-align: right;
+  margin-right: 1%;
+  margin-top: 1rem;
+}
+#output_box{
+  margin : 1rem;
+  text-align: right;
+}
+#output_count{
+  font-size: 2rem;
+}
+#ballcount{
+  color: rgba(172, 255, 47, 1);
+}
+#ballcount_off{
+  color: rgba(172, 255, 47, 0.13);
+}
+#strikecount{
+  color: rgba(255, 0, 0, 1);
+}
+#strikecount_off{
+  color: rgba(255, 0, 0, 0.13);
+}
