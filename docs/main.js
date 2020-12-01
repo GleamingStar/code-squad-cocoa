@@ -5,6 +5,7 @@ const _ = {
 class BaseballModel {
   constructor() {
     this.createAnswer();
+    console.log(this.answer);
   }
   answer = [];
 
@@ -19,25 +20,12 @@ class BaseballModel {
     }
   }
 
-  endGame(input) {
-    if (this.getStrikeCount(input, this.answer) === 3) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   getResult(input) {
     const result = {
       input: input,
       strike: this.getStrikeCount(input, this.answer),
       ball: this.getBallCount(input, this.answer),
     };
-
-    // if (strikeCount === 0 && ballCount === 0) result += "낫싱";
-    // if (strikeCount > 0) result += strikeCount + " 스트라이크 ";
-    // if (ballCount > 0) result += ballCount + " 볼";
-
     return result;
   }
 
@@ -72,50 +60,76 @@ class BaseballView {
     strikeOff: _.$("#strikecount_off"),
   };
 
-  inning = 0;
+  scoreboard = {
+    playerScore: _.$("#player_score").querySelectorAll("td"),
+    computerScore: _.$("#computer_score").querySelectorAll("td"),
+  };
 
-  render(input, strike, ball) {
-    this.renderText(input, strike, ball);
-    this.renderCount(strike, ball);
-    this.renderScoreboard(strike);
+  score = {
+    inning: 0,
+    totalBall: 0,
+    totalStrike: 0,
+  };
+
+  render({ input, ball, strike }) {
+    this.renderText(input, ball, strike);
+    this.renderCount(ball, strike);
+    this.renderScoreboard(ball, strike);
+    if (strike === 3) this.endGame();
+    if(this.score.inning === 9) this.gameOver();
   }
 
-  renderText(input, strike, ball) {
+  renderText(input, ball, strike) {
     const template = `입력값은 ${input.join(
       ", "
     )} <br /> ${ball} 볼 ${strike} 스트라이크 <br />&nbsp`;
     this.text.innerHTML = template;
-    if(strike === 3)
-    this.text.innerHTML += `3개의 숫자를 모두 맞히셨습니다. 게임종료!`
+    if (strike === 3)
+      this.text.innerHTML += `3개의 숫자를 모두 맞히셨습니다. 게임종료!`;
   }
 
-  renderCount(strike, ball) {
+  renderCount(ball, strike) {
     this.count.ball.innerHTML = " ●".repeat(ball);
     this.count.ballOff.innerHTML = " ●".repeat(3 - ball);
     this.count.strike.innerHTML = " ●".repeat(strike);
     this.count.strikeOff.innerHTML = " ●".repeat(3 - strike);
   }
 
-  renderScoreboard(strike, ball) {
+  renderScoreboard(ball, strike) {
+    this.score.inning++;
+    this.score.totalBall += ball;
+    this.score.totalStrike += strike;
+    const playerScore = this.scoreboard.playerScore;
+    const computerScore = this.scoreboard.computerScore;
 
+    playerScore[11].innerHTML = this.score.totalBall;
+    playerScore[12].innerHTML = this.score.totalStrike;
+
+    computerScore[this.score.inning].innerHTML = 0;
+    playerScore[this.score.inning].innerHTML = strike === 3 ? 1 : 0;
   }
 
-  showResult({ input, strike, ball }) {
-    this.render(input, strike, ball);
+  endGame() {
+    // contoller쪽인가? 근데 스코어표시나 버튼은 view인데?
+    this.scoreboard.playerScore[10].innerHTML = 1;
+    _.$("#input_box").innerHTML = `<button id="restart_btn">다시 시작</button>`;
+    _.$("#restart_btn").addEventListener("click", () =>
+      window.location.reload()
+    );
+    //폭죽 3발 효과
+  }
 
-    console.log("입력값은 " + input.join(", "));
-
-    console.log(ball + " 볼 " + strike + " 스트라이크");
-
-    if (strike === 3) {
-      console.log("3개의 숫자를 모두 맞히셨습니다! 게임 종료");
-    }
+  gameOver() {
+    // 아래 버튼 추가 및 이벤트생성 메서드로 따로 빼자
+    _.$("#input_box").innerHTML = `<button id="restart_btn">다시 시작</button>`;
+    _.$("#restart_btn").addEventListener("click", () =>
+      window.location.reload()
+    );
   }
 }
 //렌더 {
 // outputbox에 result 던져주기
 // result 값에 정보만 받아서
-// 2. 총 스트라이크와 볼 counts 올려서 전광판 렌더링 renderBillBoard
 // 3. you 점수 0점 올리고 settimeout 0.5초후 com도 0 renderScoreBoard
 // 3.5 3이 비동기인데 4,5는 어떻게 처리할까
 // 4. 게임끝났으면 폭죽터트리고 inputbox.innerHTML = <button>다시시작</button> btn.addEvent(click 새로고침) 다시시작 버튼 올리기 renderGameOver
@@ -141,7 +155,7 @@ class BaseballController {
         .substr(0, 3)
         .split("")
         .map((element) => parseInt(element, 10));
-      this.view.showResult(this.model.getResult(input));
+      this.view.render(this.model.getResult(input));
     });
   }
 }

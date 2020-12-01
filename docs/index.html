@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
-    <title>Document</title>
+    <title>숫자 야구</title>
   </head>
   <body>
     <!-- <h1>숫자 야구</h1> -->
@@ -24,7 +24,7 @@
         <div id="score_board">
           <table>
             <tr>
-              <td></td>
+              <td id="inning"></td>
               <td>1</td>
               <td>2</td>
               <td>3</td>
@@ -38,35 +38,35 @@
               <td>B</td>
               <td>S</td>
             </tr>
-            <tr>
+            <tr id="computer_score">
               <td>COM</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
               <td>0</td>
               <td>0</td>
               <td>0</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
             </tr>
-            <tr>
+            <tr id="player_score">
               <td>YOU</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
               <td>0</td>
               <td>0</td>
-              <td>1</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
+              <td>0</td>
             </tr>
           </table>
           <div id="input_box">
@@ -81,17 +81,17 @@
           <br />
           <div id="output_box">
             <div id="output_text">
-              입력값은 3 4 5 <br />
-              2 볼 1 스트라이크
+              입력값은 <br />
+              0 볼 0 스트라이크
               <br />
               <br />
             </div>
             <br />
             <div id="output_count">
-              B <span id="ballcount">●</span><span id="ballcount_off"> ● ●</span
+              B <span id="ballcount"></span><span id="ballcount_off">● ● ●</span
               ><br />
-              S <span id="strikecount">●</span
-              ><span id="strikecount_off"> ● ●</span>
+              S <span id="strikecount"></span
+              ><span id="strikecount_off">● ● ●</span>
             </div>
           </div>
         </div>
