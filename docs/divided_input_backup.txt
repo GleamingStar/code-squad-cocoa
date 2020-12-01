@@ -1,0 +1,53 @@
+//inputbox 3등분 백업!
+
+//확인버튼이 뭘 해도 안예쁘다. 이미지로 바꾸면 그때 다시 살려보자
+
+{/* <div id="input_box">
+            <input type="text" name="" class="input_text"/>
+            <input type="text" name="" class="input_text"/>
+            <input type="text" name="" class="input_text"/>
+            <button id="input_btn">확인</button>
+          </div> */}
+
+
+////////////////////////////
+
+
+// #input_box .input_text{
+//   text-align: center;
+//   font-size: 1.5rem;
+//   width:1.5rem;
+// }
+// #input_box #input_btn{
+//   font-size: 1.25rem;
+// }
+
+
+////////////////////////////
+
+// init() {
+//   this.addBtnEvent();
+//   this.addTextEvent
+// }
+
+// addBtnEvent() {
+//   this.inputBtn.addEventListener("click", () => {
+//     const input = [];
+//     this.inputText.forEach(({value})=>{
+//       input.push(parseInt(value,10));
+//       value = "";
+//     })
+//     this.view.render(this.model.getResult(input));
+//     this.inputText[0].focus();
+//   });
+// }
+
+// addTextEvent() {
+//   this.inputText.forEach(e=>{
+//       e.addEventListener("keypress", (e) => {
+//         if (e.keyCode === 13) 
+//           this.inputBtn.click();
+//       })
+//       e.addEventListener // 여기서부터 추가
+//   })
+// }

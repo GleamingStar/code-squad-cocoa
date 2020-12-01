@@ -135,7 +135,7 @@ class BaseballController {
 
   init() {
     this.inputBtn.addEventListener("click", () => {
-      const input = _.$("#input_text").value.replace(/[^0-9]/g, "").substr(0, 3).split("").map((element) => parseInt(element, 10));
+      const input = this.inputText.value.replace(/[^0-9]/g, "").substr(0, 3).split("").map((element) => parseInt(element, 10));
       this.inputText.value = "";
       this.view.render(this.model.getResult(input));
       this.inputText.focus();
