@@ -46,6 +46,7 @@ class BaseballModel {
 
 class BaseballView {
   text = _.$("#output_text");
+  record = _.$("#record_box");
 
   count = {
     ball: _.$("#ballcount"),
@@ -66,8 +67,11 @@ class BaseballView {
   };
 
   render({ input, ball, strike, answer }) {
+    if (input.length !== 3)
+      return this.text.innerHTML = `3자리의 수를 입력해주세요! <br />&nbsp <br />&nbsp `
     this.renderText(input, ball, strike);
     this.renderCount(ball, strike);
+    this.renderRecord(input, ball, strike);
     this.renderScoreboard(ball, strike);
     if (strike === 3) 
       this.endGame();
@@ -86,6 +90,10 @@ class BaseballView {
     this.count.strikeOff.innerHTML = " ●".repeat(3 - strike);
   }
 
+  renderRecord(input, ball, strike) {
+    this.record.innerHTML += ` ${input.join(" ")} - ${ball} B ${strike} S <br />`;
+  }
+
   renderScoreboard(ball, strike) {
     this.score.inning++;
     this.score.totalBall += ball;
@@ -102,11 +110,9 @@ class BaseballView {
   }
 
   endGame() {
-    // controller쪽인가? 근데 스코어표시나 버튼은 view인데?
     this.scoreboard.playerScore[10].innerHTML = 1;
     this.text.innerHTML += `3개의 숫자를 모두 맞히셨습니다. 게임종료!`;
     this.addResetBtn();
-    //폭죽 3발 효과
   }
 
   gameOver(answer) {
@@ -119,11 +125,7 @@ class BaseballView {
     _.$("#restart_btn").addEventListener("click", () => window.location.reload());
   }
 }
-//렌더 {
-// 3. you 점수 0점 올리고 settimeout 0.5초후 com도 0 renderScoreBoard
-// 3.5 3이 비동기인데 4,5는 어떻게 처리할까
-// 4. 게임끝났으면 폭죽터트리고 inputbox.innerHTML = <button>다시시작</button> btn.addEvent(click 새로고침) 다시시작 버튼 올리기 renderGameOver
-// }
+
 class BaseballController {
   constructor(model, view) {
     this.model = model;

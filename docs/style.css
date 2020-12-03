@@ -37,10 +37,19 @@ table {
 td, td{
   border: 1px solid white;
 }
+#record_box{
+  float: left;
+  margin-top: 1rem;
+  margin-left: 1rem;
+  line-height: 1.7rem;
+}
 #input_box{
   text-align: right;
   margin-right: 1%;
   margin-top: 1rem;
+}
+#input_box #input_text{
+  width: 7.5rem;
 }
 #output_box{
   margin : 1rem;
