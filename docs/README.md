@@ -8,6 +8,7 @@
 - endGame() 불꽃놀이 이펙트 구현
     - canvas란 무엇인가, 어떻게 적용해야 하는가
 - renderScoreboard()에서 setTimeout 및 비동기상태에서의 순서 정렬 구현
+- src폴더 생성 후 class별로 파일 구분
 
 ### 추가
 - 전광판 아래부분 투수 타자 이미지

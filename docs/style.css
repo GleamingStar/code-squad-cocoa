@@ -16,13 +16,12 @@ h1 {
 #grid p {
   padding: 1rem;
   border-right: 1px solid;
-  height: 40rem;
 }
 #score_board {
   text-align: center;
   margin: 1rem;
   width: 90%;
-  height: 55%;
+  height: 23rem;
   border: 1px solid;
   background-color: rgb(37, 35, 35);
   color: white;

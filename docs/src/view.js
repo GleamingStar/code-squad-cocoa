@@ -1,50 +1,8 @@
 const _ = {
-  $: (selector, base = document) => base.querySelector(selector),
-};
+    $: (selector, base = document) => base.querySelector(selector),
+  };
 
-class BaseballModel {
-  constructor() {
-    this.createAnswer();
-    console.log(this.answer);
-  }
-  answer = [];
-
-  createAnswer() {
-    for (let i = 0; i < 3; i++) {
-      let id = Math.floor(Math.random() * 9) + 1;
-      this.answer.indexOf(id) === -1 ? this.answer.push(id) : i--;
-    }
-  }
-
-  getResult(input) {
-    return {
-      input: input,
-      strike: this.getStrikeCount(input, this.answer),
-      ball: this.getBallCount(input, this.answer),
-      answer: this.answer
-    };
-  }
-
-  getStrikeCount(input, answer) {
-    let strikeCount = 0;
-    for (let i = 0; i < 3; i++) 
-      if (answer[i] === input[i]) 
-        strikeCount++;
-
-    return strikeCount;
-  }
-
-  getBallCount(input, answer) {
-    let ballCount = 0;
-    for (let i = 0; i < 3; i++)
-      if (answer.indexOf(input[i]) !== -1 && answer[i] != input[i]) 
-        ballCount++;
-
-    return ballCount;
-  }
-}
-
-class BaseballView {
+export default class BaseballView {
   text = _.$("#output_text");
   record = _.$("#record_box");
 
@@ -68,14 +26,14 @@ class BaseballView {
 
   render({ input, ball, strike, answer }) {
     if (input.length !== 3)
-      return this.text.innerHTML = `3자리의 수를 입력해주세요! <br />&nbsp <br />&nbsp `
+      return this.text.innerHTML = `3자리의 수를 입력해주세요! <br />&nbsp <br />&nbsp `;
     this.renderText(input, ball, strike);
     this.renderCount(ball, strike);
     this.renderRecord(input, ball, strike);
     this.renderScoreboard(ball, strike);
-    if (strike === 3) 
+    if (strike === 3)
       this.endGame();
-    else if (this.score.inning === 9) 
+    else if (this.score.inning === 9)
       this.gameOver(answer);
   }
 
@@ -105,8 +63,8 @@ class BaseballView {
     playerScore[12].innerHTML = this.score.totalStrike;
 
     playerScore[this.score.inning].innerHTML = strike === 3 ? 1 : 0;
-    if(this.score.inning < 9 && strike !== 3)
-    computerScore[this.score.inning+1].innerHTML = 0;
+    if (this.score.inning < 9 && strike !== 3)
+      computerScore[this.score.inning + 1].innerHTML = 0;
   }
 
   endGame() {
@@ -116,7 +74,7 @@ class BaseballView {
   }
 
   gameOver(answer) {
-    this.text.innerHTML += `정답은 ${answer.join(', ')}입니다.`
+    this.text.innerHTML += `정답은 ${answer.join(', ')}입니다.`;
     this.addResetBtn();
   }
 
@@ -125,29 +83,3 @@ class BaseballView {
     _.$("#restart_btn").addEventListener("click", () => window.location.reload());
   }
 }
-
-class BaseballController {
-  constructor(model, view) {
-    this.model = model;
-    this.view = view;
-  }
-
-  inputBtn = _.$("#input_btn");
-  inputText = _.$("#input_text");
-
-  init() {
-    this.inputBtn.addEventListener("click", () => {
-      const input = this.inputText.value.replace(/[^0-9]/g, "").substr(0, 3).split("").map((element) => parseInt(element, 10));
-      this.inputText.value = "";
-      this.view.render(this.model.getResult(input));
-      this.inputText.focus();
-    });
-
-    this.inputText.addEventListener("keypress", (e) => {
-      if (e.keyCode === 13) 
-        this.inputBtn.click();
-    });
-  }
-}
-
-new BaseballController(new BaseballModel(), new BaseballView()).init();
